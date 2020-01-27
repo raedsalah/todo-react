@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import Todos from "./Todos";
+import AddForm from "./AddForm";
 
 class App extends Component {
   state = {
-    todos: [
-      { id: 1, content: "buy milk" },
-      { id: 2, content: "Play Game" }
-    ]
+    todos: []
+  };
+
+  addTask = task => {
+    // possible id duplication
+    task.id = Math.random();
+
+    let todos = [...this.state.todos, task];
+
+    this.setState({ todos });
   };
 
   deleteTask = id => {
@@ -22,8 +29,9 @@ class App extends Component {
   render() {
     return (
       <div className="todo-app container">
-        <h1 className="center blue-text">Todo's</h1>
+        <h1 className="center blue-text">Tasks</h1>
         <Todos todos={this.state.todos} deleteTask={this.deleteTask} />
+        <AddForm addTask={this.addTask} />
       </div>
     );
   }
